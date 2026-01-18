@@ -325,7 +325,7 @@ ul {
 .right-col {
   right: calc(-324.923px + 25.031vw);
   /* right: 0px;  */
-  max-width: 720px ; 
+  max-width: 760px ; 
   width: calc(100% - 60px);
   background: #fff;
   position: absolute;
@@ -2277,7 +2277,7 @@ ul {
   .right-col {
     /* margin-left: auto; */
     right: 0;
-    max-width: 720px;
+    max-width: 760px;
     width: 100%;
     transition:right 0.3s;
     /* position:relative; */
@@ -2458,7 +2458,7 @@ ul {
   .max-hero-text-content {
     position: relative;
     z-index: 2;
-    max-width: 720px;
+    max-width: 760px;
     width: 100%;
     padding: 100px 40px;
   }
@@ -2528,7 +2528,7 @@ ul {
 
 }
 
-@media (max-width: 720px) {
+@media (max-width: 760px) {
 
   .btn-promo-pink {
     display: inline-flex;
@@ -2615,7 +2615,7 @@ ul {
   .max-hero-text-content {
     position: relative;
     z-index: 2;
-    max-width: 720px;
+    max-width: 760px;
     padding: 100px 20px;
   }
   
