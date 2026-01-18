@@ -1,117 +1,4 @@
-// Event Carousel Functionality
-document.addEventListener('DOMContentLoaded', function() {
-  const eventCarousel = document.querySelector('.event-carousel');
-  const carouselWrapper = document.querySelector('.event-carousel-wrapper');
-  const carouselImages = document.querySelectorAll('.carousel-event-image');
-  const navLeft = document.querySelector('.event-section .nav-left');
-  const navRight = document.querySelector('.event-section .nav-right');
-  
-  if (!carouselWrapper || !carouselImages.length || !navLeft || !navRight || !eventCarousel) {
-    return;
-  }
-  
-  let currentIndex = 1; // Start with second image
-  const totalSlides = carouselImages.length;
-  let isAnimating = false;
-  const TRANSITION_LOCK_MS = 1050; // keep close to CSS transition (currently 1s)
-  
-  // Update carousel position by sliding to the actual slide's offset
-  function updateCarousel() {
-    const target = carouselImages[currentIndex];
-    if (!target) return;
-    
-    // Get the carousel container width (accounting for padding)
-    const carouselWidth = eventCarousel.offsetWidth;
-    const slideWidth = target.offsetWidth || target.getBoundingClientRect().width;
-    
-    // Calculate the offset of the target slide relative to the wrapper
-    // Since slides are in a flex container, we can use offsetLeft
-    const wrapperRect = carouselWrapper.getBoundingClientRect();
-    const targetRect = target.getBoundingClientRect();
-    const targetOffset = targetRect.left - wrapperRect.left;
-    
-    // Center the slide in the carousel viewport
-    const carouselPadding = 10; // padding from CSS
-    const visibleWidth = carouselWidth - (carouselPadding * 2);
-    const translateX = -(targetOffset - (visibleWidth / 2) + (slideWidth / 2));
-    
-    carouselWrapper.style.transform = `translateX(${translateX}px)`;
-  }
 
-  function lockDuringTransition() {
-    isAnimating = true;
-    window.setTimeout(() => {
-      isAnimating = false;
-    }, TRANSITION_LOCK_MS);
-  }
-  
-  // Navigate to next slide (right)
-  function slideRight() {
-    if (isAnimating) return;
-    currentIndex = (currentIndex + 1) % totalSlides;
-    updateCarousel();
-    lockDuringTransition();
-  }
-  
-  // Navigate to previous slide (left)
-  function slideLeft() {
-    if (isAnimating) return;
-    currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
-    updateCarousel();
-    lockDuringTransition();
-  }
-  
-  // Event listeners for navigation buttons
-  navRight.addEventListener('click', (e) => {
-    e.preventDefault();
-    slideRight();
-  });
-  navLeft.addEventListener('click', (e) => {
-    e.preventDefault();
-    slideLeft();
-  });
-  
-  // Initialize carousel position
-  const initCarousel = () => {
-    // Start with second slide (index 1)
-    currentIndex = 1;
-    carouselWrapper.style.transform = 'translateX(0px)';
-    setTimeout(() => {
-      updateCarousel();
-    }, 50);
-  };
-  
-  // Initialize after a short delay to ensure layout is ready
-  setTimeout(initCarousel, 100);
-  
-  // Recalculate positions when layout changes
-  let resizeTimeout;
-  window.addEventListener('resize', () => {
-    clearTimeout(resizeTimeout);
-    resizeTimeout = setTimeout(() => {
-      updateCarousel();
-    }, 250);
-  });
-
-  // Ensure correct offsets after images/fonts finish loading
-  window.addEventListener('load', () => {
-    setTimeout(() => {
-      updateCarousel();
-    }, 100);
-  });
-  
-  // Handle image load events to recalculate positions
-  carouselImages.forEach((slide) => {
-    const img = slide.querySelector('img');
-    if (img) {
-      img.addEventListener('load', () => {
-        if (!isAnimating) {
-          updateCarousel();
-        }
-      });
-    }
-  });
-});
 
 // Drawer Navigation Toggle Functionality
 document.addEventListener('DOMContentLoaded', function() {
@@ -138,142 +25,211 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 
-// Book Carousel Functionality
+// Event Carousel Functionality
 document.addEventListener('DOMContentLoaded', function() {
-  const bookCarousel = document.querySelector('.book-carousel-');
-  const bookCards = document.querySelectorAll('.book-card');
-  const prevBtn = document.querySelector('.curr-controls .prev');
-  const nextBtn = document.querySelector('.curr-controls .next');
-  const dots = document.querySelectorAll('.curr-controls .dot');
+  const carouselWrapper = document.querySelector('.event-carousel-wrapper');
+  const navLeft = document.querySelector('.carousel-nav.nav-left');
+  const navRight = document.querySelector('.carousel-nav.nav-right');
+  const eventCarousel = document.querySelector('.event-carousel');
   
-  if (!bookCarousel || !bookCards.length || !prevBtn || !nextBtn || !dots.length) {
+  if (!carouselWrapper || !navLeft || !navRight || !eventCarousel) {
+    console.error('Carousel elements not found');
     return;
   }
   
-  let currentIndex = 0;
-  const totalCards = bookCards.length;
-  let isScrolling = false;
-  let userScrolling = false;
-  
-  // Update active dot
-  function updateDots() {
-    dots.forEach((dot, index) => {
-      if (index === currentIndex) {
-        dot.classList.add('active');
-      } else {
-        dot.classList.remove('active');
-      }
-    });
+  // Verify buttons are found and accessible
+  if (!navLeft || !navRight) {
+    console.error('Navigation buttons not found');
+    return;
   }
   
-  // Scroll to specific card
-  function scrollToCard(index, smooth = true) {
-    // Ensure index is within bounds
-    if (index < 0) index = 0;
-    if (index >= totalCards) index = totalCards - 1;
+  // Get original slides
+  let carouselImages = document.querySelectorAll('.carousel-event-image');
+  const originalSlides = Array.from(carouselImages);
+  const totalOriginalSlides = originalSlides.length;
+  
+  if (totalOriginalSlides === 0) {
+    return;
+  }
+  
+  // Clone first slide and append to end, clone last slide and prepend to beginning
+  const firstClone = originalSlides[0].cloneNode(true);
+  const lastClone = originalSlides[totalOriginalSlides - 1].cloneNode(true);
+  
+  carouselWrapper.insertBefore(lastClone, originalSlides[0]);
+  carouselWrapper.appendChild(firstClone);
+  
+  // Update slides reference after cloning
+  carouselImages = document.querySelectorAll('.carousel-event-image');
+  const totalSlides = carouselImages.length;
+  
+  // Start at index 1 (first real slide, after cloned last slide)
+  let currentIndex = 1;
+  let isTransitioning = false;
+  let autoPlayInterval = null;
+  const AUTO_PLAY_DELAY = 3000; // 3 seconds
+  
+  // Function to get slide width based on screen size
+  function getSlideWidth() {
+    const firstSlide = carouselImages[0];
+    if (!firstSlide) return 434; // Default desktop width
+    return firstSlide.offsetWidth || (window.innerWidth <= 620 ? 343 : 434);
+  }
+  
+  // Function to update carousel position
+  function updateCarousel(disableTransition = false) {
+    if (isTransitioning) return;
     
-    currentIndex = index;
-    const targetCard = bookCards[currentIndex];
+    const slideWidth = getSlideWidth();
+    const translateX = -currentIndex * slideWidth;
     
-    if (targetCard) {
-      isScrolling = true;
-      userScrolling = false;
-      
-      // Calculate scroll position
-      const cardOffsetLeft = targetCard.offsetLeft;
-      const cardWidth = targetCard.offsetWidth;
-      const carouselWidth = bookCarousel.offsetWidth;
-      
-      // Center the card in the carousel viewport
-      const targetScroll = cardOffsetLeft - (carouselWidth / 2) + (cardWidth / 2);
-      
-      bookCarousel.scrollTo({
-        left: targetScroll,
-        behavior: smooth ? 'smooth' : 'auto'
-      });
-      
-      updateDots();
-      
-      // Reset scrolling flag after animation
-      setTimeout(() => {
-        isScrolling = false;
-      }, smooth ? 600 : 100);
+    if (disableTransition) {
+      carouselWrapper.style.transition = 'none';
+    } else {
+      carouselWrapper.style.transition = 'transform 1s ease-in-out';
+    }
+    
+    carouselWrapper.style.transform = `translateX(${translateX}px)`;
+    
+    // Enable buttons (circular loop, so buttons are always enabled)
+    navLeft.style.opacity = '1';
+    navLeft.style.cursor = 'pointer';
+    navRight.style.opacity = '1';
+    navRight.style.cursor = 'pointer';
+  }
+  
+  // Function to handle seamless loop transition (bidirectional circular loop)
+  function handleLoopTransition(direction) {
+    // If we're at the cloned first slide (last position), jump to real first slide (forward)
+    if (currentIndex === totalSlides - 1 && direction === 'forward') {
+      setTimeout(function() {
+        isTransitioning = true;
+        carouselWrapper.style.transition = 'none';
+        currentIndex = 1; // Jump back to first real slide
+        updateCarousel(true);
+        setTimeout(function() {
+          carouselWrapper.style.transition = 'transform 1s ease-in-out';
+          isTransitioning = false;
+        }, 50);
+      }, 1000); // Wait for transition animation to complete
+    }
+    // If we're at the cloned last slide (first position), jump to real last slide (backward)
+    else if (currentIndex === 0 && direction === 'backward') {
+      setTimeout(function() {
+        isTransitioning = true;
+        carouselWrapper.style.transition = 'none';
+        currentIndex = totalOriginalSlides; // Jump to last real slide
+        updateCarousel(true);
+        setTimeout(function() {
+          carouselWrapper.style.transition = 'transform 1s ease-in-out';
+          isTransitioning = false;
+        }, 50);
+      }, 1000); // Wait for transition animation to complete
     }
   }
   
-  // Navigate to next card
-  function nextCard() {
-    if (isScrolling) return;
-    const nextIndex = (currentIndex + 1) % totalCards;
-    scrollToCard(nextIndex);
-  }
-  
-  // Navigate to previous card
-  function prevCard() {
-    if (isScrolling) return;
-    const prevIndex = (currentIndex - 1 + totalCards) % totalCards;
-    scrollToCard(prevIndex);
-  }
-  
-  // Event listeners for navigation buttons
-  nextBtn.addEventListener('click', nextCard);
-  prevBtn.addEventListener('click', prevCard);
-  
-  // Event listeners for dots
-  dots.forEach((dot, index) => {
-    dot.addEventListener('click', () => {
-      if (!isScrolling) {
-        scrollToCard(index);
-      }
-    });
-  });
-  
-  // Update dots when user manually scrolls
-  let scrollTimeout;
-  bookCarousel.addEventListener('scroll', () => {
-    if (isScrolling) return; // Ignore programmatic scrolling
+  // Function to go to next slide (slide right/forward: 1 → 2 → 3 → 1 → 2 → 3...)
+  function nextSlide() {
+    if (isTransitioning) return;
     
-    clearTimeout(scrollTimeout);
-    scrollTimeout = setTimeout(() => {
-      // Find the card closest to the center
-      const carouselRect = bookCarousel.getBoundingClientRect();
-      const carouselCenter = carouselRect.left + carouselRect.width / 2;
-      
-      let closestIndex = 0;
-      let closestDistance = Infinity;
-      
-      bookCards.forEach((card, index) => {
-        const cardRect = card.getBoundingClientRect();
-        const cardCenter = cardRect.left + cardRect.width / 2;
-        const distance = Math.abs(cardCenter - carouselCenter);
-        
-        if (distance < closestDistance) {
-          closestDistance = distance;
-          closestIndex = index;
-        }
-      });
-      
-      if (currentIndex !== closestIndex) {
-        currentIndex = closestIndex;
-        updateDots();
-      }
-    }, 150);
+    currentIndex++;
+    updateCarousel();
+    
+    // Check if we need to loop after transition completes
+    // When we reach the cloned first slide, seamlessly jump back to real first slide
+    if (currentIndex === totalSlides - 1) {
+      handleLoopTransition('forward');
+    }
+  }
+  
+  // Function to go to previous slide (slide left/backward: 3 → 2 → 1 → 3 → 2 → 1...)
+  function prevSlide() {
+    if (isTransitioning) return;
+    
+    currentIndex--;
+    updateCarousel();
+    
+    // Check if we need to loop after transition completes
+    // When we reach the cloned last slide, seamlessly jump to real last slide
+    if (currentIndex === 0) {
+      handleLoopTransition('backward');
+    }
+  }
+  
+  // Function to start auto-play
+  function startAutoPlay() {
+    stopAutoPlay(); // Clear any existing interval
+    autoPlayInterval = setInterval(nextSlide, AUTO_PLAY_DELAY);
+  }
+  
+  // Function to stop auto-play
+  function stopAutoPlay() {
+    if (autoPlayInterval) {
+      clearInterval(autoPlayInterval);
+      autoPlayInterval = null;
+    }
+  }
+  
+  // Navigate backward (left button - slide to left)
+  navLeft.addEventListener('click', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    if (isTransitioning) return;
+    
+    stopAutoPlay(); // Pause auto-play on manual navigation
+    prevSlide(); // Move backward (slide to left)
+    
+    // Resume auto-play after a delay to allow transition to start
+    setTimeout(function() {
+      startAutoPlay();
+    }, 100);
   });
   
-  // Initialize
-  updateDots();
-  // Scroll to first card without animation on load
-  setTimeout(() => {
-    scrollToCard(0, false);
-  }, 100);
+  // Navigate forward (right button - slide to right)
+  navRight.addEventListener('click', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    if (isTransitioning) return;
+    
+    stopAutoPlay(); // Pause auto-play on manual navigation
+    nextSlide(); // Move forward (slide to right)
+    
+    // Resume auto-play after a delay to allow transition to start
+    setTimeout(function() {
+      startAutoPlay();
+    }, 100);
+  });
   
-  // Recalculate on resize
-  let resizeTimeout;
-  window.addEventListener('resize', () => {
-    clearTimeout(resizeTimeout);
-    resizeTimeout = setTimeout(() => {
-      scrollToCard(currentIndex, false);
+  // Ensure buttons are clickable and visible
+  navLeft.style.pointerEvents = 'auto';
+  navRight.style.pointerEvents = 'auto';
+  navLeft.style.zIndex = '10';
+  navRight.style.zIndex = '10';
+  
+  // Pause auto-play on hover
+  eventCarousel.addEventListener('mouseenter', stopAutoPlay);
+  eventCarousel.addEventListener('mouseleave', startAutoPlay);
+  
+  // Handle window resize to recalculate position
+  let resizeTimer;
+  window.addEventListener('resize', function() {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function() {
+      updateCarousel(true);
     }, 250);
   });
+  
+  // Initialize carousel at the first real slide
+  updateCarousel(true);
+  
+  // Verify buttons are clickable
+  navLeft.setAttribute('type', 'button');
+  navRight.setAttribute('type', 'button');
+  navLeft.setAttribute('aria-label', 'Previous slide');
+  navRight.setAttribute('aria-label', 'Next slide');
+  
+  // Start auto-play
+  startAutoPlay();
 });
-
