@@ -141,6 +141,12 @@ ul {
   margin-right: 10px;
 }
 
+
+.hero-button {
+  margin-top: 20px !important;
+  justify-content: start !important;
+}
+
 .phone-row {
   font-size: 20px;
   font-weight: 700;
@@ -267,7 +273,7 @@ ul {
 .main-nav li {
   flex: 1;
   text-align: center;
-  padding: 35px 0 16px 0;
+  padding: 25px 0 16px 0;
   cursor: pointer;
   position: relative;
   transition: all 0.2s;
@@ -318,7 +324,7 @@ ul {
   width: 100%;
   height: 100vh;
   flex-direction: column;
-  top: 174px;
+  top: 167px;
   position: fixed;
 }
 
@@ -329,7 +335,7 @@ ul {
   width: calc(100% - 60px);
   background: #fff;
   position: absolute;
-  top: 174px;
+  top: 167px;
   /* overflow: visible; */
   z-index: 3;
   box-sizing: border-box;
@@ -395,6 +401,9 @@ ul {
   position: relative;
   z-index: 2;
   max-width: 520px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .hero-title {
@@ -421,7 +430,7 @@ ul {
 }
 
 .main-message {
-  margin: 30px 0;
+  margin: 20px 0;
   color: #005695;
 }
 
@@ -2821,7 +2830,7 @@ ul {
 
 
 .allgrades {
-  margin-top: 50px;
+  margin-top: 35px;
   width: 44%;
   display: flex;
   gap: 5px;
