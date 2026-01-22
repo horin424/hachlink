@@ -1,5 +1,4 @@
 
-
 // Drawer Navigation Toggle Functionality
 document.addEventListener('DOMContentLoaded', function() {
   const drawerToggle = document.querySelector('.btn-horizontal');
