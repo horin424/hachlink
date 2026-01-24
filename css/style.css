@@ -282,6 +282,14 @@ ul {
   justify-content: space-between;
 }
 
+.main-nav-ul {
+  display: flex;
+}
+
+
+.main-nav-ul a {
+  width: 16%;
+}
 .main-nav {
   margin-right: 20px;
 }
@@ -411,6 +419,7 @@ ul {
   left: 30px;
   transform: rotate(-15deg);
   border-radius: 8px;
+  z-index: -1;
 }
 
 .shape-blue-circle-small {
@@ -1800,6 +1809,7 @@ ul {
   bottom: 0px;
   left: 0;
   z-index: -10;
+  margin-bottom: -1px;
 }
 
 .bluetrangle img{
