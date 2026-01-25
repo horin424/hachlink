@@ -2459,7 +2459,7 @@ position: relative;
 
 @media (max-width: 1740px) {
   .right-col {
-    width: 680px;
+    width: 650px;
   }
 }
 
@@ -2531,7 +2531,6 @@ position: relative;
   .allgrades {
     display: none !important;
   }
-
 
   .right-col {
     width: 600px;
