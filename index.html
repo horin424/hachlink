@@ -10,6 +10,7 @@
     />
     <link href="https://fonts.googleapis.com/css2?family=Yomogi&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
     <link rel="stylesheet" href="./css/style.css" />
   </head>
   <body >
@@ -356,49 +357,29 @@
                     定期的に楽しく魅力的なイベントを多数開催しています。ぜひチェックしてみてください！
                   </p>
                 </div>
-                <div class="event-carousel">
-                  <div class="event-carousel-wrapper">
-                    <div class="carousel-event-image">
+                <div class="event-carousel swiper">
+                  <div class="swiper-wrapper">
+                    <div class="swiper-slide">
                       <img src="./img/carasel2-1.png" alt="交流会イベント">
                     </div>
-                    <div class="carousel-event-image">
+                    <div class="swiper-slide">
                       <img src="img/carasel2-2.png" alt="" />
                     </div>
-                    <div class="carousel-event-image">
-                      <img src="./img/carasel2-3.png" alt="">
-                    </div>
-                    <div class="carousel-event-image">
-                      <img src="./img/carasel2-1.png" alt="交流会イベント">
-                    </div>
-                    <div class="carousel-event-image">
-                      <img src="img/carasel2-2.png" alt="" />
-                    </div>
-                    <div class="carousel-event-image">
-                      <img src="./img/carasel2-3.png" alt="">
-                    </div>
-                    <div class="carousel-event-image">
-                      <img src="./img/carasel2-1.png" alt="交流会イベント">
-                    </div>
-                    <div class="carousel-event-image">
-                      <img src="img/carasel2-2.png" alt="" />
-                    </div>
-                    <div class="carousel-event-image">
+                    <div class="swiper-slide">
                       <img src="./img/carasel2-3.png" alt="">
                     </div>
                   </div>
                 </div>
-                
-                    <button class="carousel-nav nav-left">
-                      <svg width="8" height="14" viewBox="0 0 8 14" fill="none">
-                        <path d="M7 1L1 7L7 13" stroke="#56ccf2" stroke-width="2" stroke-linecap="round"/>
-                      </svg>
-                    </button>
-    
-                    <button class="carousel-nav nav-right">
-                      <svg width="8" height="14" viewBox="0 0 8 14" fill="none">
-                        <path d="M1 1L7 7L1 13" stroke="#56ccf2" stroke-width="2" stroke-linecap="round"/>
-                      </svg>
-                    </button>
+                <button class="carousel-nav nav-left swiper-button-prev">
+                  <svg width="8" height="14" viewBox="0 0 8 14" fill="none">
+                    <path d="M7 1L1 7L7 13" stroke="#56ccf2" stroke-width="2" stroke-linecap="round"/>
+                  </svg>
+                </button>
+                <button class="carousel-nav nav-right swiper-button-next">
+                  <svg width="8" height="14" viewBox="0 0 8 14" fill="none">
+                    <path d="M1 1L7 7L1 13" stroke="#56ccf2" stroke-width="2" stroke-linecap="round"/>
+                  </svg>
+                </button>
                   
                   <!-- Diagonal blue overlay -->
                   <div class="bluetrangle">
@@ -639,6 +620,7 @@
             <section class="satisfaction-section">
               <!-- <div class="satisfaction-section-img"> -->
                 <img src="./img/semi.png" alt="" class="satisfaction-header">
+                <img src="./img/semi_sp.png" alt="" class="satisfaction-header-sp">
               <!-- </div> -->
       
             </section>
@@ -857,6 +839,7 @@
       </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="js/top.js"></script>
     <script>
   document.addEventListener('keydown', function(e) {

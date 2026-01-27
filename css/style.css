@@ -158,6 +158,10 @@ position: relative;
   width: 100%;
 }
 
+.satisfaction-header-sp {
+  display: none;
+}
+
 .line-img {
   height: 36px;
   width: auto;
@@ -2045,6 +2049,54 @@ position: relative;
   right: 20px;
 }
 
+/* Override Swiper default button styles to maintain custom styling */
+.carousel-nav.swiper-button-prev,
+.carousel-nav.swiper-button-next {
+  position: absolute;
+  top: 82%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid #56ccf2;
+  background: rgba(255, 255, 255, 0.95);
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: all 0.2s;
+  margin: 0;
+  padding: 8px;
+}
+
+.carousel-nav.swiper-button-prev:hover,
+.carousel-nav.swiper-button-next:hover {
+  background: #56ccf2;
+}
+
+.carousel-nav.swiper-button-prev:hover svg path,
+.carousel-nav.swiper-button-next:hover svg path {
+  stroke: #fff;
+}
+
+.carousel-nav.swiper-button-prev.nav-left {
+  left: 20px;
+  right: auto;
+}
+
+.carousel-nav.swiper-button-next.nav-right {
+  right: 20px;
+  left: auto;
+}
+
+/* Hide Swiper's default arrow icons */
+.carousel-nav.swiper-button-prev::after,
+.carousel-nav.swiper-button-next::after {
+  display: none;
+}
+
 .carousel-main-slide {
   width: 100%;
   max-width: 240px;
@@ -2682,6 +2734,7 @@ position: relative;
   .right-col {
     /* margin-left: auto; */
     right: 0;
+    max-width: 600px;
     width: 100%;
     transition:right 0.3s;
     /* position:relative; */
@@ -2997,6 +3050,17 @@ position: relative;
     right: 30px;
   }
 
+  /* Override Swiper default button styles for mobile */
+  .carousel-nav.swiper-button-prev.nav-left {
+    left: 249px;
+    right: auto;
+  }
+  
+  .carousel-nav.swiper-button-next.nav-right {
+    right: 30px;
+    left: auto;
+  }
+
 }
 
 @media (max-width: 620px) {
@@ -3164,13 +3228,22 @@ position: relative;
   }
   
   .book-card {
-    
     scroll-snap-align: center;
     flex-shrink: 0;
     width: 100%;
     padding: 20px;
-    /* width: 380px;
-    min-width: 380px;
-    height: 541px; */
+  }
+
+  .satisfaction-header {
+    display: none;
+  }
+
+  .satisfaction-header-sp {
+    display: block;
+    width: 100%;
+  }
+
+  .teacher-points-list {
+    padding: 0;
   }
 }
