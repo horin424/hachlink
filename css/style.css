@@ -1989,13 +1989,23 @@ position: relative;
   padding: 0 10px;
 }
 
+.swiper-wrapper {
+  width: 100%;
+}
+.swiper-slide {
+  width: 100%;
+}
+
+.swiper-slide img {
+  width: 100%;
+}
 .event-carousel-wrapper {
   display: flex;
   align-items: flex-start;
   transition: transform 1s ease-in-out;
   will-change: transform;
   cursor: grab;
-  height: 188px;
+  /* height: 188px; */
   margin-bottom: 100px;
 }
 
@@ -2042,11 +2052,11 @@ position: relative;
 }
 
 .nav-left {
-  left: 20px;
+  left: 30px;
 }
 
 .nav-right {
-  right: 20px;
+  right: 30px;
 }
 
 /* Override Swiper default button styles to maintain custom styling */
@@ -2082,12 +2092,12 @@ position: relative;
 }
 
 .carousel-nav.swiper-button-prev.nav-left {
-  left: 20px;
+  left: 30px;
   right: auto;
 }
 
 .carousel-nav.swiper-button-next.nav-right {
-  right: 20px;
+  right: 30px;
   left: auto;
 }
 
@@ -3042,28 +3052,25 @@ position: relative;
     stroke: #fff;
   }
   
-  .nav-left {
-    left: 249px;
-  }
-  
-  .nav-right {
-    right: 30px;
-  }
+
 
   /* Override Swiper default button styles for mobile */
-  .carousel-nav.swiper-button-prev.nav-left {
-    left: 249px;
-    right: auto;
-  }
   
-  .carousel-nav.swiper-button-next.nav-right {
-    right: 30px;
-    left: auto;
-  }
-
 }
 
 @media (max-width: 620px) {
+    .carousel-nav.swiper-button-prev.nav-left {
+      left: 249px;
+      right: auto;
+      top: 105%;
+    }
+    
+    .carousel-nav.swiper-button-next.nav-right {
+      right: 30px;
+      left: auto;
+      top: 105%;
+    }
+
     .study-img {
       display: block;
       width: 100%;
@@ -3102,6 +3109,14 @@ position: relative;
 
     .teachers-inner {
       padding: 100px 20px 0;
+    }
+
+    .nav-left {
+      left: 249px;
+    }
+    
+    .nav-right {
+      right: 30px;
     }
 
     .promo-content {
@@ -3198,10 +3213,6 @@ position: relative;
       margin-inline: auto;
     }
   
-    .study-img {
-      display: none;
-    }
-
     .maxwith-background {
       height: 791px;
     }
