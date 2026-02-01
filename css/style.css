@@ -9,7 +9,7 @@
 html, body {
   margin: 0;
   padding: 0;
-  overflow: hidden;
+  /* overflow: hidden; */
   width: 100%;
   height: 100%;
 }
@@ -37,7 +37,7 @@ body {
   overflow-x: hidden;
   width: 100%;
   max-width: 100%;
-  /* overflow-y: hidden; */
+  overflow-y: hidden;
 }
 
 img {
@@ -60,7 +60,7 @@ ul {
 
 .mainfix {
   height: 100vh;          /* 常に画面基準 */															
-overflow: hidden;       /* はみ出しを切る */														
+overflow: hidden;      													
 position: relative;	
 }
 
@@ -352,45 +352,54 @@ position: relative;
 .page-grid {
   display: flex;
   width: 100%;
-  max-width: 1920px;
   margin: 0 auto;
   background: #fff;
-  min-height: 100vh;
   position: relative;
   overflow-x: hidden;
   box-sizing: border-box;
+  position: relative;
+  top: 167px;
 }
 
-.left-col {
-  background: linear-gradient(135deg, #ebf6fb 0%, #ebf7fc 100%);
-  width: 100%;
-  height: 100vh;
-  flex-direction: column;
-  top: 167px;
-  position: fixed;
+.left-col { 
+  background: linear-gradient(135deg, #ebf6fb 0%, #ebf7fc 100%); 
+  width: 100%; 
+  height: 100vh; 
+  flex-direction: column; 
+  top: 0px;
+  position: relative; 
+  overflow-y: auto;
+}
+
+.scrollright {
+  width: 50%;
+  height: calc(100vh - 167px);
+  position: relative;
+  top: 0;
+  right: -50%;
+  overflow-y: auto;
+  /* display: flex; */
+  /* justify-content: center; */
 }
 
 .right-col {
-  right: calc(-324.923px + 25.031vw);
-  /* right: 0px;  */
-  max-width: 760px ; 
-  width: calc(100% - 60px);
+  width: calc(164.286px + 31.027vw);
   background: #fff;
-  position: absolute;
-  top: 167px;
-  /* overflow: visible; */
-  z-index: 3;
+  position: relative;
+  right: calc(51.714px - 6.027vw);
+  top: 0px;
+  z-index: 6;
   box-sizing: border-box;
+  min-height: calc(100vh - 167px);
 }
 
 /* --- Hero Section (Left Column) --- */
 .hero-bg {
   background: linear-gradient(135deg, #ebf6fb 0%, #ebf7fc 100%);
-  padding: 0 calc(-324.923px + 24.031vw);
+  padding: 0 calc(-112.571px + 12.946vw);
   width: 100%;
   height: calc(100% - 167px);
-  position: relative;
-  overflow: hidden;
+  position: fixed;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -459,22 +468,23 @@ position: relative;
 
 .hero-online {
   display: flex;
-  width: 724px;
+  width: calc(164.286px + 31.027vw);
   justify-content: space-between;
   align-items: center;
   gap: 5px;
-  padding: 3px 12px;
+  padding: 3px calc(-3.000px + 0.781vw);;
   background-color: #ffffff;
 }
 
 .hero-title {
   color: #005695;
-  font-size: 36px;
+  font-size: calc(1.714px + 1.786vw);
   font-weight: 700;
+  letter-spacing: 0;
 }
 
 .point-list li {
-  font-size: 18px;
+  font-size: calc(5.143px + 0.67vw);
   color: #005695;
   margin-bottom: 8px;
   display: flex;
@@ -487,10 +497,11 @@ position: relative;
 
 .cursive-point {
   font-family: "Oooh Baby", cursive;
-  font-size: 20px;
+  font-size: calc(5.143px + 0.67vw);
   color: #88bbd6;
-  margin-right: 10px;
+  margin-right: calc(-11.429px + 1.116vw);
   min-width: 60px;
+  letter-spacing: -0.4px;
 }
 
 .main-message {
@@ -499,17 +510,13 @@ position: relative;
 }
 
 .main-message h2 {
-  font-size: 36px;
+  font-size: calc(10.286px + 1.339vw);
   line-height: 1.4;
   font-weight: 700;
 }
 
-.main-message .small {
-  font-size: 20px;
-}
-
 .check-list p {
-  font-size: 22px;
+  font-size: calc(9.143px + 0.67vw);
   color: #005695;
   margin-bottom: 8px;
 }
@@ -783,9 +790,15 @@ position: relative;
 
 .allgrades {
   margin-top: 40px;
-  width: 724px;
+  width: calc(164.286px + 31.027vw);
   display: flex;
   gap: 5px;
+  z-index: 1000;
+}
+
+.grade {
+  z-index: 100;
+  width: 20%;
 }
 
 .grade img {
@@ -2498,55 +2511,8 @@ position: relative;
   display: none;
 }
 
-@media (max-width: 1600px) {
-  .right-col {
-    right: 40px;
-  }
-
-  .hero-bg {
-    padding: 45px 40px;
-  }
-}
-
-@media (max-width: 1490px) {
-  .right-col {
-    right: 20px;
-  }
-
-  .hero-bg {
-    padding: 45px 20px;
-  }
-}
-
-@media (max-width: 1740px) {
-  .right-col {
-    width: 650px;
-  }
-}
-
-@media (max-width: 1439px) {
-  .right-col {
-    right: 0px;
-  }
-  .hero-title {
-    font-size: 32px;
-  }
-
-  .main-message h2 {
-    font-size: 32px;
-  }
-
-  .hero-bg {
-    padding: 45px 20px;
-  }
-}
 
 @media (max-width: 1420px) {
- 
-  .right-col {
-    right: 30px;
-    width: 600px;
-  }
 
   .max-hero-title {
     color: white;
@@ -2554,50 +2520,22 @@ position: relative;
     font-weight: 680;
     margin-bottom: 24px;
   }
-  
-  .hero-online {
-    display: flex;
-    width: 680px;
-    justify-content: space-between;
-    align-items: center;
-    gap: 5px;
-    padding: 3px 12px;
-    background-color: #ffffff;
-  }  
-
-  .allgrades {
-    width: 680px;
-  }
-
-  .point-list li {
-    font-size: 16px;
-  }
 
   .check-list {
     font-size: 20px;
   }
-
-  .hero-bg {
-    padding-inline: 30px;
-  }
   
 }
 
-@media (max-width: 1300px) {
+@media (max-width: 1024px) {
 
-  .hero-text-content {
+  /* .hero-text-content {
     display: none;
-  }
+  } */
 
-  .allgrades {
+  /* .allgrades {
     display: none !important;
-  }
-
-  .right-col {
-    width: 600px;
-    left: 50%;
-    transform: translateX(-50%);
-  }
+  } */
 
   .maxwith {
     display: block;
@@ -2694,6 +2632,15 @@ position: relative;
 
 /* --- Tablet Breakpoint (max-width: 1024px) --- */
 @media (max-width: 1024px) {
+  .scrollright {
+    width: 100% !important;
+    right: 0;
+  }
+
+  .right-col {
+    max-width: 1024px !important;
+  }
+
   .page-grid {
     flex-direction: column;
   }
@@ -2741,12 +2688,10 @@ position: relative;
   }
 
   .right-col {
-    /* margin-left: auto; */
     right: 0;
     max-width: 600px;
     width: 100%;
     transition:right 0.3s;
-    /* position:relative; */
     box-sizing: border-box;
   }
 
