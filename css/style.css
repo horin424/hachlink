@@ -2693,6 +2693,7 @@ position: relative;
     width: 100%;
     transition:right 0.3s;
     box-sizing: border-box;
+    overflow-x: hidden;
   }
 
   .hero-text-content {
